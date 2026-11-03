@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="es"><head><title>Panel del tutor · Tutor USMP</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="ESTILOS/tema.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={prefix:'tw-',corePlugins:{preflight:false}}</script></head>
+<body data-page="panel"><div id="nav"></div><main id="contenido" tabindex="-1">
+<div class="container py-5">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><h1 class="titulo mb-0 h2">Panel del tutor</h1><a id="verPerfil" class="btn btn-outline-danger" href="profesores.html"><i class="bi bi-eye" aria-hidden="true"></i> Ver cómo me ven los estudiantes</a></div>
+
+<ol class="tw-flex tw-flex-wrap tw-gap-2 tw-mb-4 tw-p-0 tw-list-none" aria-label="Pasos para publicar tu perfil">
+<li class="paso-pill tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-text-sm tw-shadow-sm"><span class="badge bg-guinda rounded-pill">1</span> Disponibilidad</li>
+<li class="paso-pill tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-text-sm tw-shadow-sm"><span class="badge bg-guinda rounded-pill">2</span> Ubicación</li>
+<li class="paso-pill tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-text-sm tw-shadow-sm"><span class="badge bg-guinda rounded-pill">3</span> Cursos</li>
+<li class="paso-pill tw-bg-white tw-rounded-full tw-px-3 tw-py-1 tw-text-sm tw-shadow-sm"><span class="badge bg-success rounded-pill"><i class="bi bi-check2" aria-hidden="true"></i></span> Perfil publicado</li></ol>
+
+<div id="estado" role="status" aria-live="polite" class="caja-gris mb-4"></div>
+
+<div class="row g-4 mb-4">
+<div class="col-lg-4"><section class="tarjeta p-4 h-100" aria-labelledby="hCta"><h2 class="h5 fw-bold text-guinda" id="hCta">Mi cuenta</h2>
+<div class="d-flex align-items-center gap-3 mt-3 mb-3"><div class="avatar" id="aI" style="width:64px;height:64px" aria-hidden="true">?</div><div><div class="fw-bold" id="aN"></div><span class="badge bg-guinda" id="aT"></span></div></div>
+<ul class="list-unstyled small mb-3"><li><b>Correo:</b> <span id="aE"></span></li><li><b>Carrera:</b> <span id="aC"></span></li></ul>
+<h3 class="h6 fw-bold text-guinda">Estado del perfil</h3><ul class="list-unstyled small mb-0 d-grid gap-1" id="chkl"></ul></section></div>
+
+<div class="col-lg-8"><section class="tarjeta p-4 h-100" aria-labelledby="hDisp"><h2 class="h5 fw-bold text-guinda" id="hDisp">1. Mi disponibilidad semanal</h2>
+<p class="small text-muted">Activa los días en que atiendes y define la hora exacta de inicio y de fin. Los estudiantes podrán reservar bloques de 1 hora dentro de ese rango.</p>
+<form id="fDisp" novalidate><div id="dias" class="d-grid gap-2 mb-3"></div>
+<div id="dErr" class="invalid-text" role="alert"></div>
+<button class="btn btn-guinda"><i class="bi bi-save" aria-hidden="true"></i> Guardar disponibilidad</button></form></section></div></div>
+
+<section class="tarjeta p-4 mb-4" aria-labelledby="hUb"><h2 class="h5 fw-bold text-guinda" id="hUb">2. Ubicación y punto de encuentro <span class="badge text-bg-danger ms-1">Obligatorio</span></h2>
+<div id="gate" class="caja-gris small mb-3"><i class="bi bi-lock" aria-hidden="true"></i> Primero guarda tu disponibilidad (paso 1) para desbloquear este paso.</div>
+<form id="fUbic" novalidate><fieldset id="fsUbic" disabled>
+<legend class="form-label fw-semibold fs-6">¿Dónde atenderás? Elige una zona</legend>
+<div class="row g-3" id="zonas" role="radiogroup" aria-label="Zona de atención"></div>
+<div class="mt-3"><label for="detalle" class="form-label fw-semibold">Salón, pabellón, cubículo o aula exacta <span class="text-danger" aria-hidden="true">*</span></label>
+<input id="detalle" class="form-control" maxlength="60" autocomplete="off" required aria-required="true" aria-describedby="detAyuda uErr" placeholder="Elige primero una zona">
+<div id="detAyuda" class="form-text">Los estudiantes verán este dato al agendar su tutoría.</div></div>
+<div id="uErr" class="invalid-text" role="alert"></div>
+<div class="caja-ok small my-3" id="vista" aria-live="polite">Vista previa: aún no has definido tu ubicación.</div>
+<button class="btn btn-guinda"><i class="bi bi-geo-alt" aria-hidden="true"></i> Guardar ubicación</button></fieldset></form></section>
+
+<section class="tarjeta p-4 mb-4" aria-labelledby="hCur"><h2 class="h5 fw-bold text-guinda" id="hCur">3. Cursos que asesoras</h2>
+<p class="small text-muted">Cursos de tu carrera. Debes marcar al menos uno para aparecer en las búsquedas.</p>
+<form id="fCur" novalidate><label for="bc" class="form-label small fw-semibold">Filtrar cursos</label><input id="bc" class="form-control mb-3" placeholder="Ej: Cálculo, Base de Datos…" autocomplete="off">
+<div id="listaC" class="lista-cursos mb-2" tabindex="0" role="group" aria-label="Lista de cursos de tu carrera"></div>
+<p class="small text-muted"><span id="nc">0</span> curso(s) seleccionado(s)</p><div id="cErr" class="invalid-text" role="alert"></div>
+<button class="btn btn-guinda"><i class="bi bi-journal-check" aria-hidden="true"></i> Guardar cursos</button></form></section>
+
+<section class="tarjeta p-4" aria-labelledby="hAg"><h2 class="h5 fw-bold text-guinda" id="hAg">Tutorías agendadas por estudiantes <span class="badge bg-guinda ms-1" id="agN">0</span></h2><div id="agL"></div></section>
+</div></main>
+<div id="pie"></div><script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="JS/datos.js"></script>
+<script src="JS/app.js"></script>
+<script>$(function(){const u=yo();if(!u||rolDe(u)!='tutor')return;
+const T0=miTutor(u),K='tutorcfg_'+u.correo;
+let cfg=JSON.parse(localStorage.getItem(K)||'null')||{};cfg.hor=cfg.hor||{};cfg.cur=cfg.cur||[];cfg.loc=cfg.loc||null;
+const save=()=>localStorage.setItem(K,JSON.stringify(cfg)),dispOk=()=>Object.keys(cfg.hor).length>0,ubicOk=()=>!!(cfg.loc&&cfg.loc.z&&cfg.loc.d),curOk=()=>cfg.cur.length>0;
+const dt=r=>new Date(r.f+'T'+String(r.h).padStart(2,'0')+':00:00');
+$('#aI').text(ini({n:u.nombre}));$('#aN').text(u.nombre);$('#aT').text(u.tipoTutor||'Docente');$('#aE').text(u.correo);$('#aC').text(u.carrera);
+if(T0)$('#verPerfil').attr('href','profesores.html?t='+T0.id);
+
+/* ---- 1. disponibilidad ---- */
+const opt=(a,b,sel)=>{let s='';for(let h=a;h<=b;h++)s+=`<option value="${h}" ${h==sel?'selected':''}>${hora12(h)}</option>`;return s};
+$('#dias').html(DS.map((d,i)=>{const b=cfg.hor[d],on=!!b;return `<div class="dia-fila ${on?'on':''}" data-d="${d}"><div class="form-check form-switch m-0"><input class="form-check-input dia-on" type="checkbox" role="switch" id="on${i}" ${on?'checked':''}><label class="form-check-label fw-semibold" for="on${i}">${d}</label></div>
+<div class="d-flex align-items-center gap-2 flex-wrap"><label class="visually-hidden" for="ini${i}">Hora de inicio, ${d}</label><select id="ini${i}" class="form-select form-select-sm ini" ${on?'':'disabled'}>${opt(8,20,b?b[0]:9)}</select><span aria-hidden="true">a</span><label class="visually-hidden" for="fin${i}">Hora de fin, ${d}</label><select id="fin${i}" class="form-select form-select-sm fin" ${on?'':'disabled'}>${opt(9,21,b?b[1]:13)}</select></div><span class="small text-muted dur" aria-live="polite"></span></div>`}).join(''));
+function ajustar(r){const a=+r.find('.ini').val(),f=r.find('.fin');f.find('option').each(function(){$(this).prop('disabled',+this.value<=a)});if(+f.val()<=a)f.val(a+1);r.find('.dur').text(r.find('.dia-on').prop('checked')?(+f.val()-a)+' h':'')}
+$('.dia-fila').each(function(){ajustar($(this))});
+$('#dias').on('change','.dia-on',function(){const r=$(this).closest('.dia-fila');r.toggleClass('on',this.checked).find('select').prop('disabled',!this.checked);ajustar(r)}).on('change','.ini,.fin',function(){ajustar($(this).closest('.dia-fila'))});
+$('#fDisp').on('submit',function(e){e.preventDefault();const H={};
+ $('.dia-fila').each(function(){const r=$(this);if(r.find('.dia-on').prop('checked'))H[r.data('d')]=[+r.find('.ini').val(),+r.find('.fin').val()]});
+ if(!Object.keys(H).length){$('#dErr').text('Activa al menos un día para ofrecer tutorías.');return toast('Activa al menos un día y define su horario.','warning')}
+ $('#dErr').text('');
+ const ch=T0?reservasDeTutor(T0).filter(r=>dt(r)>=new Date()).filter(r=>{const b=H[DS[(new Date(r.f+'T00:00:00').getDay()+6)%7]];return !b||r.h<b[0]||r.h>=b[1]}):[];
+ const ir=()=>{cfg.hor=H;save();toast('Disponibilidad guardada','success');refrescar()};
+ ch.length?confirmar('Tienes '+ch.length+' tutoría(s) ya agendada(s) fuera del nuevo horario. Seguirán reservadas. ¿Guardar de todos modos?',ir,'Sí, guardar','Revisar'):ir()});
+
+/* ---- 2. ubicación ---- */
+const ZI={'Biblioteca':'bi-book','Laboratorios y Especialidades':'bi-pc-display','FIADAT':'bi-buildings','Aulas Generales':'bi-door-open'};
+$('#zonas').html(ZONAS.map(z=>`<div class="col-sm-6 col-xl-3"><label class="rol-card h-100"><input class="visually-hidden" type="radio" name="zona" value="${z}" ${cfg.loc&&cfg.loc.z==z?'checked':''}><span class="rol-ic"><i class="bi ${ZI[z]}" aria-hidden="true"></i></span><b>${z}</b></label></div>`).join(''));
+if(cfg.loc)$('#detalle').val(cfg.loc.d);
+function vista(){const z=$('[name=zona]:checked').val(),d=$('#detalle').val().trim();$('#detalle').attr('placeholder',z?ZONA_EJ[z]:'Elige primero una zona');$('#detAyuda').text(z?ZONA_EJ[z]+' · Los estudiantes verán este dato al agendar.':'Los estudiantes verán este dato al agendar su tutoría.');
+ $('#vista').text(z&&d?'Los estudiantes verán: '+z+' · '+d:'Vista previa: completa la zona y el detalle exacto.')}
+$('#fUbic').on('input change','input',vista);vista();
+$('#fUbic').on('submit',function(e){e.preventDefault();const z=$('[name=zona]:checked').val(),d=$('#detalle').val().trim().replace(/\s+/g,' ');
+ const bad=!z?'Elige una zona de atención.':!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜü .,\-#\/°º]{3,60}$/.test(d)?'Escribe el salón, pabellón, cubículo o aula exacta (3 a 60 caracteres, sin símbolos especiales).':'';
+ $('#detalle').toggleClass('is-invalid',!!bad&&!!z).attr('aria-invalid',!!bad&&!!z);$('#uErr').text(bad);
+ if(bad){if(z)$('#detalle').trigger('focus');return toast(bad,'danger')}
+ cfg.loc={z,d};save();toast('Ubicación guardada: '+z+' · '+d,'success');refrescar()});
+
+/* ---- 3. cursos ---- */
+const MC=CURSOS.filter(c=>c.car==u.carrera);
+$('#listaC').html([...Array(11)].map((_,k)=>{const L=MC.filter(c=>c.cic==k+1);return L.length?`<div class="grupo-c"><h3 class="h6 text-guinda fw-bold mt-2">${cicTxt(k+1)}</h3>${L.map(c=>`<div class="form-check chk-curso"><input class="form-check-input" type="checkbox" id="c${c.id}" value="${c.id}" ${cfg.cur.includes(c.id)?'checked':''}><label class="form-check-label" for="c${c.id}">${c.n}</label></div>`).join('')}</div>`:''}).join('')||'<p class="text-muted m-2">No hay cursos registrados para tu carrera.</p>');
+const cnt=()=>$('#listaC input:checked').length;$('#nc').text(cnt());
+$('#listaC').on('change','input',()=>$('#nc').text(cnt()));
+$('#bc').on('input',function(){const q=nz(this.value.trim());$('#listaC .chk-curso').each(function(){$(this).toggle(!q||nz($(this).text()).includes(q))});$('#listaC .grupo-c').each(function(){$(this).toggle($(this).find('.chk-curso:visible').length>0)})});
+$('#fCur').on('submit',function(e){e.preventDefault();const C=$('#listaC input:checked').map(function(){return +this.value}).get();
+ if(!C.length){$('#cErr').text('Selecciona al menos un curso.');return toast('Selecciona al menos un curso que puedas asesorar.','warning')}
+ $('#cErr').text('');cfg.cur=C;save();toast(C.length+' curso(s) guardado(s)','success');refrescar()});
+
+/* ---- estado y agenda ---- */
+function agendadas(){const L=T0?reservasDeTutor(T0).filter(r=>dt(r)>=new Date()).sort((a,b)=>dt(a)-dt(b)):[];$('#agN').text(L.length).attr('aria-label',L.length+' tutorías');
+ $('#agL').html(L.length?L.map(r=>`<div class="d-flex flex-wrap gap-3 align-items-center border-bottom py-3"><div class="avatar sm" aria-hidden="true">${esc(r.est.split(' ').slice(0,2).map(x=>x[0]).join(''))}</div><div class="flex-grow-1"><div class="fw-semibold">${esc(CURSOS[r.c].n)}</div><small class="text-muted">${esc(r.est)} · ${esc(r.mod)}<br>${fechaTxt(r.f)} · ${hora12(r.h)}<br><i class="bi bi-geo-alt" aria-hidden="true"></i> ${esc(ubicTxt({loc:cfg.loc}))}</small></div></div>`).join(''):'<p class="text-muted my-3 mb-0">Aún no tienes tutorías agendadas. Cuando un estudiante reserve contigo, aparecerá aquí.</p>')}
+function refrescar(){const falta=[];if(!dispOk())falta.push('disponibilidad');if(!ubicOk())falta.push('ubicación');if(!curOk())falta.push('cursos');const pub=!falta.length;
+ $('#fsUbic').prop('disabled',!dispOk());$('#gate').toggleClass('d-none',dispOk());
+ const li=(ok,t)=>`<li class="d-flex gap-2 align-items-center"><i class="bi ${ok?'bi-check-circle-fill text-success':'bi-circle text-muted'}" aria-hidden="true"></i><span>${t}<span class="visually-hidden">${ok?' (completado)':' (pendiente)'}</span></span></li>`;
+ $('#chkl').html(li(dispOk(),'Disponibilidad')+li(ubicOk(),'Ubicación y punto de encuentro')+li(curOk(),'Cursos que asesoras'));
+ $('#estado').attr('class',(pub?'caja-ok':'caja-gris')+' d-flex gap-2 align-items-start mb-4').html(pub?'<i class="bi bi-patch-check-fill" aria-hidden="true"></i><span><b>Perfil publicado.</b> Los estudiantes ya pueden encontrarte y agendar contigo.</span>':'<i class="bi bi-info-circle-fill" aria-hidden="true"></i><span><b>Tu perfil aún no es visible.</b> Para aparecer en las búsquedas completa: '+falta.join(', ')+'.</span>');
+ agendadas()}
+refrescar()});</script></body></html>

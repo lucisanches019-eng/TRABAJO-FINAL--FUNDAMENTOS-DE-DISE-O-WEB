@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="es"><head><title>Perfil del tutor · Tutor USMP</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="ESTILOS/tema.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={prefix:'tw-',corePlugins:{preflight:false}}</script></head><body data-page="buscar"><div id="nav"></div><main id="contenido" tabindex="-1">
+<div class="container py-5"><a id="vb" href="agendar.html" class="text-guinda text-decoration-none"><i class="bi bi-arrow-left" aria-hidden="true"></i> Volver a la búsqueda</a>
+<h2 class="titulo my-4">Perfil del tutor</h2>
+<div class="tarjeta p-4 mb-4"><div class="row align-items-center g-4"><div class="col-auto"><div class="avatar" id="pi" style="width:96px;height:96px;font-size:2rem"></div></div>
+<div class="col-md"><h4 class="fw-bold mb-1" id="pn"></h4><div class="mb-2"><span id="pt" class="badge"></span> <span class="badge text-bg-light border" id="pc"></span></div>
+<div class="estrellas mb-2" id="prw"></div>
+<div class="row small"><div class="col-sm-6"><b class="text-guinda">Experiencia:</b> <span id="pe"></span></div><div class="col-sm-6"><b class="text-guinda">Modalidad:</b> <span id="pm"></span></div><div class="col-sm-12"><b class="text-guinda">Disponibilidad:</b> <span id="pd"></span></div><div class="col-sm-12"><b class="text-guinda">Punto de encuentro:</b> <i class="bi bi-geo-alt" aria-hidden="true"></i> <span id="pu"></span></div></div></div>
+<div class="col-md-auto text-md-end"><div class="fs-5 fw-bold text-success"><i class="bi bi-gift"></i> 100% gratuita</div><a id="ag" class="btn btn-guinda btn-lg mt-2"><i class="bi bi-calendar-plus"></i> Agendar tutoría</a> <button id="fv" class="btn btn-outline-danger btn-lg mt-2 fav" aria-label="Guardar en favoritos"><i class="bi bi-heart"></i></button></div></div></div>
+<div class="row g-4 mb-4"><div class="col-lg-7"><div class="tarjeta p-4 h-100"><h6 class="fw-bold text-guinda mb-3">CURSOS QUE ASESORA</h6><div id="cur"></div></div></div>
+<div class="col-lg-5"><div class="tarjeta p-4 h-100"><h6 class="fw-bold text-guinda mb-3">DISPONIBILIDAD SEMANAL</h6><table class="table table-sm tabla-sem mb-0"><tbody id="sem"></tbody></table><p class="small text-muted mt-3 mb-0">Horarios de ejemplo para el proyecto.</p></div></div></div>
+<div class="tarjeta p-4 mb-4"><h6 class="fw-bold text-guinda">SOBRE EL TUTOR</h6><p class="mb-0 small" id="bio"></p></div>
+<div class="tarjeta p-4"><h6 class="fw-bold text-guinda mb-3">VALORACIONES</h6><div id="comentarios"></div>
+<form id="comentar"><textarea id="txt" class="form-control mb-2" rows="3" maxlength="300" placeholder="Escribe tu comentario (máx. 300 caracteres)" aria-label="Tu comentario" required></textarea>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><div class="rate" role="radiogroup" aria-label="Calificación de 1 a 5 estrellas"><input type="radio" name="r" id="r5" value="5" required><label for="r5" title="5 estrellas">★<span class="visually-hidden"> 5 estrellas</span></label><input type="radio" name="r" id="r4" value="4"><label for="r4" title="4 estrellas">★<span class="visually-hidden"> 4 estrellas</span></label><input type="radio" name="r" id="r3" value="3"><label for="r3" title="3 estrellas">★<span class="visually-hidden"> 3 estrellas</span></label><input type="radio" name="r" id="r2" value="2"><label for="r2" title="2 estrellas">★<span class="visually-hidden"> 2 estrellas</span></label><input type="radio" name="r" id="r1" value="1"><label for="r1" title="1 estrella">★<span class="visually-hidden"> 1 estrella</span></label></div><button class="btn btn-guinda">Publicar comentario</button></div></form></div></div>
+</main><div id="pie"></div><script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="JS/datos.js"></script>
+<script src="JS/app.js"></script>
+<script>$(function(){const T=TUTORES[+new URLSearchParams(location.search).get('t')||0],esc=s=>$('<i>').text(s).html(),K='com_'+T.id;
+const U=yo();if(rolDe(U)=='tutor'){if(T.correo!=U.correo){location.replace('panelprofesor.html');return}$('#ag,#fv,#comentar').remove();$('#vb').attr('href','panelprofesor.html').html('<i class="bi bi-arrow-left" aria-hidden="true"></i> Volver a mi panel')}
+$('#pi').text(ini(T));$('#pn').text(T.n);$('#pt').text(T.tipo).addClass(T.tipo=='Docente'?'bg-guinda':'text-bg-warning');$('#pc').text(T.car+(T.tipo=='Docente'?'':' · Ciclo '+ROM[T.cic-1]));
+$('#prw').html(T.v?'<i class="bi bi-star-fill" aria-hidden="true"></i> <span class="text-dark fw-semibold">'+T.r+'</span> <small class="text-muted">('+T.v+' reseñas)</small>':'<span class="badge text-bg-info">Tutor nuevo · aún sin reseñas</span>');$('#pu').text(ubicTxt(T));$('#pe').text(expTxt(T));$('#pm').text(T.m);$('#pd').text(dispTxt(T));$('#ag').attr('href','agendamiento.html?t='+T.id);$('#fv').attr('data-t',T.id).data('t',T.id).find('i').toggleClass('bi-heart-fill text-danger',favs().includes(T.id)).toggleClass('bi-heart',!favs().includes(T.id));
+const cs=T.cur.map(i=>CURSOS[i]);
+$('#cur').html(ROM.map((r,k)=>{const L=cs.filter(c=>c.cic==k+1);return L.length?`<div class="mb-2"><span class="badge bg-guinda me-2">${k>9?'':'Ciclo '}${r}</span>${L.map(c=>`<a class="btn btn-outline-danger btn-sm me-1 mb-1" href="agendamiento.html?t=${T.id}&c=${c.id}">${c.n}</a>`).join('')}</div>`:''}).join(''));
+if(rolDe(yo())=='tutor')$('#cur a').replaceWith(function(){return $('<span class="badge text-bg-light border me-1 mb-1 fw-normal">').text($(this).text())});
+$('#sem').html(DS.map(d=>`<tr><th scope="row" class="fw-semibold">${d}</th><td>${T.hor[d]?'<span class="chip-disp">'+rango(T.hor[d])+'</span>':'<span class="text-muted">—</span>'}</td></tr>`).join(''));
+$('#bio').html(T.tipo=='Docente'?`<b>Formación:</b> docente de la Facultad de Ingeniería y Arquitectura (USMP), especialidad en ${esc(T.car)}. <b>Metodología:</b> en cada sesión incluye una dinámica de preguntas y ejercicios guiados.`:`<b>Formación:</b> estudiante destacado de ${esc(T.car)} (ciclo ${ROM[T.cic-1]}), con experiencia ayudando a compañeros. <b>Metodología:</b> repaso de teoría y resolución de ejercicios paso a paso.`);
+const base=[[5,'Explica muy bien y tiene mucha paciencia.'],[4,'Muy responsable con los horarios y exigente en lo justo.']],ext=JSON.parse(localStorage.getItem(K)||'[]');
+const row=(r,t)=>`<div class="border-bottom pb-2 mb-2 small"><span class="estrellas">${'★'.repeat(r)+'☆'.repeat(5-r)}</span> ${esc(t)}</div>`;
+$('#comentarios').html([...ext].reverse().map(c=>row(c[0],c[1])).join('')+base.map(c=>row(...c)).join(''));
+$('#comentar').on('submit',function(e){e.preventDefault();const r=+$('input[name=r]:checked').val(),t=$('#txt').val().trim();ext.push([r,t]);localStorage.setItem(K,JSON.stringify(ext));$(row(r,t)).hide().prependTo('#comentarios').slideDown();this.reset();toast('Comentario publicado','success')})});</script></body></html>
